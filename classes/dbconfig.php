@@ -36,6 +36,22 @@ class DbConfig {
 	 */
 	public static $table = null;
 
+	/**
+	 * Autoload configuration data during get()?
+	 *
+	 * @var boolean
+	 * @access public
+	 */
+	public static $autoload = false;
+
+	/**
+	 * Autosave configuration data during set()?
+	 *
+	 * @var boolean
+	 * @access public
+	 */
+	public static $autosave = false;
+
 
 	/**
 	 * Load configuration data from the database
@@ -84,6 +100,7 @@ class DbConfig {
 	{
 		if ( ! is_array($config))
 		{
+			throw new \Fuel_Exception('DbConfig: value passed to DbConfig::save() must be an array');
 			return false;
 		}
 		
@@ -116,6 +133,11 @@ class DbConfig {
 		if (strpos($item, '.') !== false)
 		{
 			$parts = explode('.', $item);
+			
+			if (static::$autoload)
+			{
+				static::load($parts[0]);
+			}
 
 			switch (count($parts))
 			{
@@ -216,6 +238,11 @@ class DbConfig {
 			break;
 		}
 
+		if (static::$autosave)
+		{
+			return static::save($parts[0], static::$items[$part[0]]);
+		}
+
 		return true;
 	}
 
@@ -229,8 +256,10 @@ class DbConfig {
 		\Config::load('dbconfig', true);
 
 		static::$table = \Config::get('dbconfig.db.table', 'config');
+		static::$autoload = \Config::get('dbconfig.db.autoload', false);
+		static::$autosave = \Config::get('dbconfig.db.autosave', false);
 		
-		$installed = \Config::get('dbconfig.db.installed', false);
+		$installed = \Config::get('dbconfig.db.installed', true);
 
 		if ( ! $installed)
 		{

@@ -12,6 +12,8 @@ return array (
 	'db' => array (
 		'table' => 'config',
 		'installed' => false,
+		'autoload' => false,
+		'autosave' => false,
 	),
 );
 
