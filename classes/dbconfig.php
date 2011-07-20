@@ -1,21 +1,50 @@
 <?php
 
+/**
+ * FuelPHP DbConfig Package
+ *
+ * @author     Frank Bardon Jr.
+ * @version    1.0
+ * @package    Fuel
+ * @subpackage DbConfig
+ */
 namespace DbConfig;
 
 class DbConfig {
 
+	/**
+	 * Array of keys that have been loaded from the database
+	 *
+	 * @var    array loaded database keys
+	 * @access public
+	 */
 	public static $loaded_keys = array();
 	
+	/**
+	 * Key/value pairs pulled from the database
+	 *
+	 * @var    array loaded database information
+	 * @access public
+	 */
 	public static $items = array();
 
+	/**
+	 * Name of the database table to pull from
+	 *
+	 * @var    string database table name
+	 * @access public
+	 */
 	public static $table = null;
 
 
-	private static function _get_by_key($key)
-	{
-		return \DB::select('value')->from(static::$table)->where('key', $key)->limit(1)->execute();
-	}
-
+	/**
+	 * Load configuration data from the database
+	 *
+	 * @access public
+	 * @param  string  database key
+	 * @param  string  group name
+	 * @param  boolean reload this request
+	 */
 	public static function load($key, $group = null, $reload = false)
 	{
 		if (in_array($key, static::$loaded_keys) and ! $reload)
@@ -43,7 +72,14 @@ class DbConfig {
 		
 		return false;
 	}
-	
+
+	/**
+	 * Save configuration array to database
+	 *
+	 * @access public
+	 * @param  string database key
+	 * @param  array  configuration values
+	 */
 	public static function save($key, $config)
 	{
 		if ( ! is_array($config))
@@ -62,7 +98,14 @@ class DbConfig {
 			return \DB::insert(static::$table)->set(array('key' => $key, 'value' => $config))->execute();
 		}
 	}
-	
+
+	/**
+	 * Get configuration value from array
+	 *
+	 * @access public
+	 * @param  string key of value to retrieve
+	 * @param  string value to use if not found
+	 */
 	public static function get($item, $default = null)
 	{
 		if (isset(static::$items[$item]))
@@ -121,7 +164,14 @@ class DbConfig {
 
 		return $default;
 	}
-	
+
+	/**
+	 * Set value in configuration array
+	 *
+	 * @access public
+	 * @param  string configuration item key
+	 * @param  array  configuration item value
+	 */
 	public static function set($item, $value)
 	{
 		$parts = explode('.', $item);
@@ -169,6 +219,11 @@ class DbConfig {
 		return true;
 	}
 
+	/**
+	 * Initialize DbConfig class
+	 *
+	 * @access public
+	 */
 	public static function _init()
 	{
 		\Config::load('dbconfig', true);
@@ -189,6 +244,24 @@ class DbConfig {
 		}
 	}
 
+	/**
+	 * Get database row for a given key
+	 *
+	 * @access private
+	 */
+	private static function _get_by_key($key)
+	{
+		return \DB::select('value')->from(static::$table)->where('key', $key)->limit(1)->execute();
+	}
+
+	/**
+	 * Install the database structure for DbConfig
+	 *
+	 * Set the database table name in config/dbconfig.php and set the installed key to false.
+	 * send a page request that includes the DbConfig array and set installed to true.
+	 *
+	 * @access private
+	 */
 	private static function _install_db()
 	{
 		$rows = \DBUtil::create_table(static::$table, array(
@@ -200,3 +273,5 @@ class DbConfig {
 		return ($rows > 0);
 	}
 }
+
+/* End of file: classes/dbconfig.php */
