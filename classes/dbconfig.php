@@ -119,6 +119,9 @@ class DbConfig {
 	/**
 	 * Get configuration value from array
 	 *
+	 * The overwhelming majority of this function has been taken from
+	 * the Fuel Core Config class.
+	 *
 	 * @access public
 	 * @param  string key of value to retrieve
 	 * @param  string value to use if not found
@@ -189,6 +192,9 @@ class DbConfig {
 
 	/**
 	 * Set value in configuration array
+	 *
+	 * The overwhelming majority of this function has been taken from
+	 * the Fuel Core Config class.
 	 *
 	 * @access public
 	 * @param  string configuration item key
