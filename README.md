@@ -5,6 +5,7 @@ This package is a drop in replacement for Fuel's Config class. It has the same b
 ## Development Team
 
 * Frank Bardon Jr. - Lead Developer ([http://nerdsrescue.me] (http://nerdsrescue.me))
+* Phil Foulston - Had the idea for this class
 
 ## Installation
 
