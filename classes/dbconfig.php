@@ -253,7 +253,7 @@ class DbConfig {
 	 */
 	public static function _init()
 	{
-		\Config::load('dbconfig', true);
+		\Config::load('dbconfig', false);
 
 		static::$table = \Config::get('dbconfig.db.table', 'config');
 		static::$autoload = \Config::get('dbconfig.db.autoload', false);
