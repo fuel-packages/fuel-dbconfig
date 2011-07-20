@@ -297,7 +297,7 @@ class DbConfig {
 			'id'    => array('constraint' => 11, 'type' => 'int', 'auto_increment' => true),
 			'key'   => array('constraint' => 30, 'type' => 'varchar', 'null' => false),
 			'value' => array('type' => 'text', 'null' => false),
-		), array('id'));
+		), array('id'), true);
 		
 		return ($rows > 0);
 	}
