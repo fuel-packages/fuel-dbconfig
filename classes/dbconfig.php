@@ -274,7 +274,12 @@ class DbConfig {
 				throw new \Exception('Could not create configuration table.');
 			}
 			
-			\Config::set('dbconfig.db', array('table' => static::$table, 'installed' => true));
+			\Config::set('dbconfig.db', array(
+				'table' => static::$table, 
+				'installed' => true, 
+				'autoload' => static::$autoload, 
+				'autosave' => static::$autosave,
+			));
 			\Config::save('dbconfig', \Config::get('dbconfig'));
 		}
 	}
