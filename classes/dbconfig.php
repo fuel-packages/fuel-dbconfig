@@ -83,7 +83,7 @@ class DbConfig {
 		if (is_array(static::$items[$group]))
 		{
 			static::$loaded_keys[] = $key;
-			return true;
+			return static::$items[$group];
 		}
 		
 		return false;
