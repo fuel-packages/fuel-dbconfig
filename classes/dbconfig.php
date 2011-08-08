@@ -100,8 +100,11 @@ class DbConfig {
 	{
 		if ( ! is_array($config))
 		{
-			throw new \Fuel_Exception('DbConfig: value passed to DbConfig::save() must be an array');
-			return false;
+			if ( ! isset(static::$items[$config]))
+			{
+				return false;
+			}
+			$config = static::$items[$config];
 		}
 		
 		$config = json_encode($config);
