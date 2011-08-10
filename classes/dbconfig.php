@@ -308,7 +308,7 @@ class DbConfig {
 	private static function _install_db()
 	{
 		$rows = \DBUtil::create_table(static::$table, array(
-			'id'    => array('constraint' => 11, 'type' => 'int', 'auto_increment' => true),
+			'id'    => array('constraint' => 11, 'type' => 'int', 'auto_increment' => true, 'unsigned' => true),
 			'key'   => array('constraint' => 30, 'type' => 'varchar', 'null' => false),
 			'value' => array('type' => 'text', 'null' => false),
 		), array('id'), true);
