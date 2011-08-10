@@ -249,7 +249,7 @@ class DbConfig {
 
 		if (static::$autosave)
 		{
-			return static::save($parts[0], static::$items[$part[0]]);
+			return static::save($parts[0], static::$items[$parts[0]]);
 		}
 
 		return true;
